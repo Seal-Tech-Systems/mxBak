@@ -10,3 +10,11 @@ Python 3.X (https://www.python.org/downloads/)
 url,login,password
 000.000.000.001:80,admin,password
 000.000.000.002:80,admin,password
+
+
+usage: main.py [-h] [-i INPUT]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        specify name of input file, default: 'input.cs

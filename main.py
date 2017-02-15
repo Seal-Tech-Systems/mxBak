@@ -5,6 +5,13 @@ from urllib import request
 import ssl
 import os
 import datetime
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--input", type=str, help="specify name of input file, default: 'input.csv'",
+                    default='input.csv')
+args = parser.parse_args()
+INPUT_FILENAME = args.input
 
 now = datetime.datetime.now()
 
@@ -13,16 +20,17 @@ CURRENT_DATE = now.strftime("%m%d%Y")
 
 LOGGING_ENABLED = False
 
+
 def get_input_data():
     result = []
-    with open('input.csv') as csvfile:
+    with open(INPUT_FILENAME) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             r = {
-                    'url': row['url'],
-                    'login': row['login'],
-                    'password': row['password'],
-                }
+                'url': row['url'],
+                'login': row['login'],
+                'password': row['password'],
+            }
             result.append(r)
     return result
 
@@ -51,6 +59,7 @@ def get_html(url, login, password):
     result, fn = _get_html(url, login, password)
     html = result.read()
     return html, fn
+
 
 def create_file(html, fn):
     dir = os.path.join(DIR, CURRENT_DATE)
@@ -84,7 +93,7 @@ def process_list(l):
                 print("Success: %s" % item['url'])
         except IOError as e:
             print("IO error '%s' while trying to process URL: %s" % (e, item['url']))
-            result.append({'url':item['url'], 'status': 'IO ERROR: %s' % e})
+            result.append({'url': item['url'], 'status': 'IO ERROR: %s' % e})
         except BaseException as e:
             print("Unknown error '%s' while trying to process URL: %s" % (e, item['url']))
             raise e
@@ -93,6 +102,7 @@ def process_list(l):
 
 def main():
     result = process_list(get_input_data())
+
 
 if __name__ == "__main__":
     main()
