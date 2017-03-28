@@ -123,8 +123,8 @@ class Config(object):
         y = query_int("Enter Still Y Size", default=240)
         q = query_int("Enter Still Quality", default=60)
         backup_stills = query_yes_no("Backup stills?")
-        backup_configs = query_yes_no("Backup configs?")
-        genrate_info = query_yes_no("Generate CSV?")
+        backup_configs = query_yes_no("Generate CSV?")
+        genrate_info = query_yes_no("Backup configs?")
         return {
             'x': x,
             'y': y,
