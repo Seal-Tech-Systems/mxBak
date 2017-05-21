@@ -48,5 +48,6 @@ def generate_backup(item, folder):
     result['status'] = 'OK'
     return result
 
+
 def run_command(item):
     print('Not implemented yet')
