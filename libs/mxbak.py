@@ -3,6 +3,22 @@ import re
 import ssl
 from urllib import request
 
+COMMAND_FILE = 'commands.txt'
+
+
+def _get_data(url, login, password):
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    p = request.HTTPPasswordMgrWithDefaultRealm()
+    p.add_password(None, url, login, password)
+    ssl_handler = request.HTTPSHandler(context=ctx)
+    auth_handler = request.HTTPBasicAuthHandler(p)
+    opener = request.build_opener(ssl_handler, auth_handler)
+    request.install_opener(opener)
+    html = opener.open(url).read()
+    return html
+
 
 def _get_html(url, login, password):
     url += '/admin/m1cam.cfg'
@@ -50,4 +66,14 @@ def generate_backup(item, folder):
 
 
 def run_command(item):
+    if not os.path.exists(COMMAND_FILE):
+        print('%s file not found in working directory' % COMMAND_FILE)
+        return
+    with open(COMMAND_FILE, 'r') as f:
+        for line in f:
+            url = item['url'] + line
+            print("Send request: %s" % url)
+            result = _get_data(url, item['login'], item['password'])
+            print("Response is:")
+            print(result)
     print('Not implemented yet')

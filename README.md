@@ -32,4 +32,4 @@ optional arguments:
                         Still quality, default 60
   -g, --generateinfo    Generate info file
   -c, --backupconfigs   Backup config files
-  -r, --runcommand      Run Command
+  -r, --runcommand      Run Command (from commands.txt)
