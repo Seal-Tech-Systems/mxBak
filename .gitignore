@@ -1,4 +1,5 @@
 .idea/
 *.pyc
 input.csv
+commands.txt
 backups/
