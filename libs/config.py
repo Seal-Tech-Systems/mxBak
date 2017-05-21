@@ -1,5 +1,6 @@
-import datetime
 import argparse
+import datetime
+import sys
 from os import path
 
 DEFAULT_X = 320
@@ -11,7 +12,6 @@ IMAGES_DIR = path.join(DIR, 'images', NOW)
 CONFIGS_DIR = path.join(DIR, 'configs', NOW)
 LOGGING_ENABLED = False
 
-import sys
 
 def _is_int(n):
     try:
@@ -20,6 +20,7 @@ def _is_int(n):
         return False
     else:
         return True
+
 
 def query_yes_no(question, default="yes"):
     """
@@ -54,9 +55,11 @@ def query_yes_no(question, default="yes"):
             sys.stdout.write("Please respond with 'yes' or 'no' "
                              "(or 'y' or 'n').\n")
 
+
 def query_int(question, default=None):
     if default and not _is_int(default):
-            raise ValueError("invalid default answer: '%s'" % default)
+        raise ValueError("invalid default answer: '%s'" % default)
+    prompt = ""
     if default is None:
         prompt = " [value] "
     elif default:
@@ -75,9 +78,11 @@ def query_int(question, default=None):
 class Args(object):
     def __init__(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument("-i", "--input", type=str, help="specify name of input file, default: 'CONFIGS_FOLDER/input.csv'",
+        parser.add_argument("-i", "--input", type=str,
+                            help="specify name of input file, default: "
+                                 "'CONFIGS_FOLDER/input.csv'",
                             default='input.csv')
-        parser.add_argument("-n", "--non-interactive", help="Intercative mode", action='store_true')
+        parser.add_argument("-n", "--non-interactive", help="Interactive mode", action='store_true')
         parser.add_argument("-s", "--backupstills", help="Backup stills", action='store_true')
         parser.add_argument("-x", "--xsize", help="Still X size, default %s" % DEFAULT_X, default=DEFAULT_X)
         parser.add_argument("-y", "--ysize", help="Still Y size, default %s" % DEFAULT_Y, default=DEFAULT_Y)
@@ -123,16 +128,16 @@ class Config(object):
         y = query_int("Enter Still Y Size", default=240)
         q = query_int("Enter Still Quality", default=60)
         backup_stills = query_yes_no("Backup stills?")
-        backup_configs = query_yes_no("Generate CSV?")
-        genrate_info = query_yes_no("Backup configs?")
+        generate_info = query_yes_no("Generate CSV?")
+        backup_configs = query_yes_no("Backup configs?")
         return {
             'x': x,
             'y': y,
             'q': q,
 
             'backupstills': backup_stills,
-            'generateinfo': backup_configs,
-            'backupconfig': genrate_info,
+            'generateinfo': generate_info,
+            'backupconfig': backup_configs,
         }
 
 

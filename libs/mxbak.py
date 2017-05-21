@@ -1,32 +1,11 @@
-import ssl
-import re
 import os
+import re
+import ssl
 from urllib import request
 
 
-def get_html(url, login, password):
-    html = ''
-    url = url + '/admin/m1cam.cfg'
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    p = request.HTTPPasswordMgrWithDefaultRealm()
-    p.add_password(None, url, login, password)
-    ssl_handler = request.HTTPSHandler(context=ctx)
-    auth_handler = request.HTTPBasicAuthHandler(p)
-    opener = request.build_opener(ssl_handler, auth_handler)
-    request.install_opener(opener)
-    result = opener.open(url)
-    info = result.info()['Content-Disposition']
-    pattern = r'attachment; filename=\"(.*)\"'
-    m = re.findall(pattern, info)
-    fn = m[0]
-    html = result.read()
-    return html, fn
-
-
 def _get_html(url, login, password):
-    url = url + '/admin/m1cam.cfg'
+    url += '/admin/m1cam.cfg'
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
@@ -45,7 +24,6 @@ def _get_html(url, login, password):
 
 
 def get_html(url, login, password):
-    html = ''
     result, fn = _get_html(url, login, password)
     html = result.read()
     return html, fn

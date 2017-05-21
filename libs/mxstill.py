@@ -1,12 +1,10 @@
-import ssl
-import re
 import os
+import ssl
 from urllib import request
 
 
 def get_img(url, login, password, x, y, q):
-    data = ''
-    url = url + '/cgi-bin/image.jpg?size=%sx%s&quality=%s'.format(x, y, q)
+    url += '/cgi-bin/image.jpg?size=%sx%s&quality=%s'.format(x, y, q)
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
@@ -20,9 +18,9 @@ def get_img(url, login, password, x, y, q):
     data = result.read()
     return data
 
+
 def get_fn(url, login, password):
-    data = ''
-    url = url + '/control/rcontrol?action=gettext&message=%24(ID.NAM)'
+    url += '/control/rcontrol?action=gettext&message=%24(ID.NAM)'
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
@@ -52,6 +50,6 @@ def generate_still(item, folder, x, y, q):
     }
     if not img:
         return result
-    create_file(img, get_fn(item['url'], item['login'], item['password'])+'.jpg', folder)
+    create_file(img, get_fn(item['url'], item['login'], item['password']) + '.jpg', folder)
     result['status'] = 'OK'
     return result

@@ -1,10 +1,14 @@
-from html.parser import HTMLParser
 from html import unescape
+from html.parser import HTMLParser
+
 
 class HTMLTableParser(HTMLParser):
     """ This class serves as a html table parser. It is able to parse multiple
     tables which you feed in. You can access the result per .tables field.
     """
+
+    def error(self, message):
+        pass
 
     def __init__(
             self,

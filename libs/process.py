@@ -1,11 +1,10 @@
 import csv
-import re
-from urllib import request
-import ssl
 import os
+
 from .mxaudit import generate_info, write_info
 from .mxbak import generate_backup
 from .mxstill import generate_still
+
 
 class Process(object):
     def __init__(self, opts):

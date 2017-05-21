@@ -2,12 +2,12 @@
 import csv
 import ssl
 from urllib import request
-import os
 
 from .htmlparser import HTMLTableParser
+
+
 def get_camera_info(url, login, password):
-    html = ''
-    url = url + '/control/camerainfo'
+    url += '/control/camerainfo'
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
@@ -19,6 +19,7 @@ def get_camera_info(url, login, password):
     request.install_opener(opener)
     html = opener.open(url).read()
     return html
+
 
 def write_info(data, fn):
     if data:
@@ -37,6 +38,7 @@ def write_info(data, fn):
 
     else:
         print('No info data')
+
 
 def generate_info(item):
     html = get_camera_info(item['url'], item['login'], item['password'])
@@ -74,4 +76,3 @@ def generate_info(item):
     result['Listening Ports'] = '"%s"' % ', '.join(result['Listening Ports'])
     result['status'] = 'OK'
     return result
-
