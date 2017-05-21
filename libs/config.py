@@ -89,6 +89,7 @@ class Args(object):
         parser.add_argument("-q", "--quality", help="Still quality, default %s" % DEFAULT_Q, default=DEFAULT_Q)
         parser.add_argument("-g", "--generateinfo", help="Generate info file", action='store_true')
         parser.add_argument("-c", "--backupconfigs", help="Backup config files", action='store_true')
+        parser.add_argument("-r", "--runcommand", help="Run Command", action='store_true')
         self.args = parser.parse_args()
 
 
@@ -118,6 +119,7 @@ class Config(object):
             'backupstills': self._args.backupstills,
             'generateinfo': self._args.generateinfo,
             'backupconfig': self._args.backupconfigs,
+            'runcommand': self._args.runcommand,
         }
 
     @property
@@ -130,6 +132,7 @@ class Config(object):
         backup_stills = query_yes_no("Backup stills?")
         generate_info = query_yes_no("Generate CSV?")
         backup_configs = query_yes_no("Backup configs?")
+        run_command = query_yes_no("Run Command?")
         return {
             'x': x,
             'y': y,
@@ -138,6 +141,7 @@ class Config(object):
             'backupstills': backup_stills,
             'generateinfo': generate_info,
             'backupconfig': backup_configs,
+            'runcommand': run_command,
         }
 
 

@@ -47,3 +47,6 @@ def generate_backup(item, folder):
     create_file(html, fn, folder)
     result['status'] = 'OK'
     return result
+
+def run_command(item):
+    print('Not implemented yet')

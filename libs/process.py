@@ -2,7 +2,7 @@ import csv
 import os
 
 from .mxaudit import generate_info, write_info
-from .mxbak import generate_backup
+from .mxbak import generate_backup, run_command
 from .mxstill import generate_still
 
 
@@ -56,6 +56,9 @@ class Process(object):
                 if opts['backupconfig']:
                     print('Backup still to %s' % self._opts['configs_dir'])
                     generate_backup(item, folder=self._opts['configs_dir'])
+
+                if opts['runcommand']:
+                    run_command(item)
             except IOError as e:
                 print("IO error '%s' while trying to process URL: %s" % (e, item['url']))
                 result.append({'url': item['url'], 'status': 'IO ERROR: %s' % e})
